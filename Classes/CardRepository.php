@@ -20,11 +20,15 @@ class CardRepository
     }
 
     // Get one
-    public function find($values): array
+    public function find(int $id): array
     {
-        //finishing getting the id
-        $query = "SELECT * FROM database WHERE id = '{id}'";
-
+        $query = "SELECT * FROM pokemon WHERE id =".$id;
+        $result = $this->databaseManager->connection->query($query);
+        foreach ($result as $entry)
+        {
+            return $entry;
+        }
+        return [];
     }
 
     // Get all
@@ -45,12 +49,13 @@ class CardRepository
 
     public function update(): void
     {
-
+        $query = "UPDATE pokemon SET pokemon_name='".$_GET['pokemon_name']."', Level='".$_GET['Level']."', pokemon_type='".$_GET['pokemon_type']."', attack_damage='".$_GET['attack_damage']."' WHERE id =".$_GET['id'];
+        $this->databaseManager->connection->query($query);
     }
 
     public function delete(): void
     {
-
+        $query = "DELETE FROM pokemon WHERE id =".$_GET['id'];
+        $this->databaseManager->connection->query($query);
     }
-
 }

@@ -17,7 +17,8 @@
             <li><?= $card['Level'] ?></li>
             <li><?= $card['pokemon_type'] ?></li>
             <li><?= $card['attack_damage'] ?></li>
-            <a href="index.php?action=edit">Edit</a>
+            <a href="index.php?action=edit&id=<?= $card['id'] ?>">Edit</a>
+            <a href="index.php?action=delete&id=<?= $card['id'] ?>">Delete</a>
         <?php endforeach; ?>
     </ul>
 

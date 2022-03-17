@@ -29,21 +29,45 @@ $action = $_GET['action'] ?? null;
 // This system will help you to only execute the code you want, instead of all of it (or complex if statements)
 switch ($action) {
     case 'create':
-        $this->create();
+        create($cardRepository);
+        overview($cardRepository);
+        break;
+    case 'edit':
+        if(!empty($_GET['id']))
+        {
+            $findIdInfo = $cardRepository->find((int)$_GET['id']);
+            edit($findIdInfo);
+        }
+        break;
+    case 'update':
+        $cardRepository->update();
+        overview($cardRepository);
+        break;
+    case 'delete':
+        $cardRepository->delete();
+        overview($cardRepository);
         break;
     default:
-        $this->overview();
+        overview($cardRepository);
         break;
 }
 
-function overview()
+function overview($cardRepository)
 {
     // Load your view
     // Tip: you can load this dynamically and based on a variable, if you want to load another view
+    $cards = $cardRepository->get();
     require 'overview.php';
 }
 
-function create()
+function create($cardRepository)
 {
-    // TODO: provide the create logic
+    //Provide the create logic
+    $values = "'{$_GET['pokemon_name']}', '{$_GET['Level']}', '{$_GET['pokemon_type']}','{$_GET['attack_damage']}'";
+    $cardRepository->create($values);
+}
+
+function edit($findIdInfo)
+{
+    require 'edit.php';
 }
